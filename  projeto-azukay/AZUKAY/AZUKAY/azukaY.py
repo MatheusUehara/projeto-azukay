@@ -1,6 +1,3 @@
-#SOBE DESGRAÇA
-
-
 import pygame , sys ,math
 from random import*
 from pygame.locals import *
