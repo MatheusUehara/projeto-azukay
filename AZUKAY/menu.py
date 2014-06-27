@@ -29,8 +29,10 @@ def selecao_fase():
                 sys.exit()
             if event.type==pygame.MOUSEBUTTONDOWN:                    
                 pos = pygame.mouse.get_pos()
+                
                 if (pos[1] > 50) and (pos[1]< 132) and ((pos[0]>48) and (pos[0]<370)):
-                    print ('pegou1')
+                    musica.stop()
+                    import teste
                 elif (pos[1] >51) and (pos[1]<132) and ((pos[0]>438) and (pos[0]<760)):
                     print ('pegou2')
                 elif (pos[1] >190) and (pos[1]<272) and ((pos[0]>240) and (pos[0]<560)):
@@ -73,7 +75,6 @@ def menu_principal():
                 elif (pos[1] >488) and (pos[1]<569) and ((pos[0]>450) and (pos[0]<774)):
                     sys.exit()                      
         screen.blit(bg,(0,0))        
-        pygame.display.flip() 
-        
+        pygame.display.flip()
         
 menu_principal()
