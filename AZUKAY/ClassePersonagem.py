@@ -4,10 +4,8 @@
 import pygame
 
 
-class Personagem:
-    inimigos = []
-    
-    def __init__(self,nome,hit,vida,pos_x, pos_y,movimento,caminho):
+class Personagem:    
+    def __init__(self,nome,hit,vida,pos_x, pos_y,movimento,caminho,meta):
         self.nome = nome
         self.pos_x = pos_x 
         self.pos_y = pos_y
@@ -15,6 +13,7 @@ class Personagem:
         self.hit = hit
         self.movimento = movimento
         self.caminho = pygame.image.load(caminho)
+        self.meta = meta
         
     def do_Rect(self):
         if self.nome == 'azukay':
@@ -27,9 +26,15 @@ class Personagem:
             self.rect = pygame.Rect(self.pos_x, self.pos_y, 46, 51)
                         
     def blita(self,screen):
-        #if tipo == 1 :
         if self.morreu() == 0 :
-            screen.blit(self.caminho,(self.pos_x,self.pos_y))             
+            screen.blit(self.caminho,(self.pos_x,self.pos_y)) 
+    
+    def getMeta(self):
+        if self.movimento == 1:
+            self.meta = 800
+        if self.movimento == 2:
+            self.meta = 600            
+                 
             
     def setCaminho(self,caminho):
         self.caminho = caminho
@@ -61,7 +66,7 @@ class Personagem:
             return 0
         else: 
             self.setxy(900,800)
-            return 1           
+            return 1                       
         
     ##################################################################################################
     # when i will pass parameters hit = azukay.getHit()

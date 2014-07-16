@@ -9,14 +9,6 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
 ##################################################################################################
-#Carregando os BACKGROUNDS
-##################################################################################################
-
-bg_config = pygame.image.load("Sprites/bg/azuka_config.png")
-bg = pygame.image.load("Sprites/bg/azuka.png")
-bg_level = pygame.image.load("Sprites/bg/azuka_selecao.png")
-
-##################################################################################################
 #AUDIO
 ##################################################################################################
 
@@ -26,6 +18,7 @@ musica.play()
 
 
 def selecao_fase():    
+    bg_level = pygame.image.load("Sprites/bg/azuka_selecao.png")
     while 1:
         for event in pygame.event.get():                     
             if event.type == pygame.QUIT: 
@@ -55,6 +48,7 @@ def selecao_fase():
 
 
 def configuracoes():
+    bg_config = pygame.image.load("Sprites/bg/azuka_config.png")
     while 1:
         for event in pygame.event.get():                     
             if event.type == pygame.QUIT: 
@@ -69,6 +63,7 @@ def configuracoes():
     
 def menu_principal():
     while 1:
+        bg = pygame.image.load("Sprites/bg/azuka.png")
         for event in pygame.event.get():                     
             if event.type == pygame.QUIT: 
                 sys.exit()
@@ -100,9 +95,50 @@ def cut1():
             screen.blit(botao_proxima_fase,(287,460))
             botaorect = botao_proxima_fase.get_rect()
             botaorect.x  = 287
-            botaorect.y = 460    
+            botaorect.y = 460               
             
-            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: 
+                    sys.exit()
+                
+    
+                if event.type==pygame.MOUSEBUTTONDOWN:             
+                    pos = pygame.mouse.get_pos()
+                   
+                    if botaorect.collidepoint(pos[0],pos[1]):
+                            x = open("nivel.txt","r")
+                            nivel = x.read()
+                            x.close()
+                            import ENGINE
+                            ENGINE.Jogar(nivel)
+
+                    else: 
+                        pass 
+         
+        pygame.display.flip()       
+ 
+def tela_perdeu():
+    x = open("nivel.txt","r")
+    nivel = x.read()
+    x.close()
+    
+    bg_perdeu = pygame.image.load("Sprites/bg/bg_morreu.png")
+    
+    menu = pygame.image.load("Sprites/botoes/menu.png")
+    menuRect = menu.get_rect()
+    menuRect.x = 90
+    menuRect.y = 400
+    
+    jogar_dnv = pygame.image.load("Sprites/botoes/tentar_novamente.png")
+    jogar_dnvRect = jogar_dnv.get_rect()
+    jogar_dnvRect.x = 410
+    jogar_dnvRect.y =  400
+    
+    
+    while 1:
+        screen.blit(bg_perdeu,(0,0))
+        screen.blit(menu,(90,400))
+        screen.blit(jogar_dnv,(410,400))
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 sys.exit()
@@ -111,16 +147,21 @@ def cut1():
             if event.type==pygame.MOUSEBUTTONDOWN:             
                 pos = pygame.mouse.get_pos()
                
-                try:
-                    if botaorect.collidepoint(pos[0],pos[1]):
-                        import teste
-                        teste.Jogar()   
-                except:
-                    continue      
-         
-        pygame.display.flip()
+                if menuRect.collidepoint(pos[0],pos[1]):
+                    menu_principal()
+                    
+                elif jogar_dnvRect.collidepoint(pos[0],pos[1]):
+                    import ENGINE
+                    ENGINE.Jogar(nivel) 
+                else: 
+                    pass
+        pygame.display.flip() 
         
- 
-            
-        
+'''
+def tela_ganhou(parametro):
+    anterior = open("nivel.txt","w")
+    anterior.write(str(parametro))
+    anterior.close()
+    cut2()
+'''    
         
