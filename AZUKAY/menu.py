@@ -8,21 +8,24 @@ size = 800,600
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
+##################################################################################################
 #Carregando os BACKGROUNDS
+##################################################################################################
 
 bg_config = pygame.image.load("Sprites/bg/azuka_config.png")
 bg = pygame.image.load("Sprites/bg/azuka.png")
 bg_level = pygame.image.load("Sprites/bg/azuka_selecao.png")
 
+##################################################################################################
 #AUDIO
+##################################################################################################
 
 pygame.mixer.init()
 musica = pygame.mixer.Sound('sons/MENU.wav')   
 musica.play()
 
-clock.tick(30)
 
-def selecao_fase():
+def selecao_fase():    
     while 1:
         for event in pygame.event.get():                     
             if event.type == pygame.QUIT: 
@@ -32,14 +35,17 @@ def selecao_fase():
                 
                 if (pos[1] > 50) and (pos[1]< 132) and ((pos[0]>48) and (pos[0]<370)):
                     musica.stop()
-                    import teste
+                    cut1()                    
                 elif (pos[1] >51) and (pos[1]<132) and ((pos[0]>438) and (pos[0]<760)):
                     print ('pegou2')
                 elif (pos[1] >190) and (pos[1]<272) and ((pos[0]>240) and (pos[0]<560)):
+                    
                     print ('pegou3')        
                 elif (pos[1] > 334) and (pos[1]< 416) and ((pos[0]>48) and (pos[0]<370)):
+                    
                     print ('pegou4')
                 elif (pos[1] >334) and (pos[1]< 416) and ((pos[0]>438) and (pos[0]<760)):
+                    
                     print ('pegou5')
                 elif (pos[1] >472) and (pos[1]<550) and ((pos[0]>438) and (pos[0]<760)):
                     menu_principal()
@@ -73,8 +79,48 @@ def menu_principal():
                 elif (pos[1] >385) and (pos[1]<463) and ((pos[0]>450) and (pos[0]<774)):
                     configuracoes()
                 elif (pos[1] >488) and (pos[1]<569) and ((pos[0]>450) and (pos[0]<774)):
-                    sys.exit()                      
-        screen.blit(bg,(0,0))        
+                    sys.exit()
+                                          
+        screen.blit(bg,(0,0))
+                
         pygame.display.flip()
         
-menu_principal()
+def cut1():
+    cutscene1 = pygame.image.load("Sprites/cutscene/cutscene.png")
+    botao_proxima_fase = pygame.image.load("Sprites/cutscene/botao_proxima_fase.png") 
+    x,y= 0,90
+    while 1:
+        screen.fill(0)
+        screen.blit(cutscene1,(x,y))
+        
+        if y > -1152:
+            y -= 3.5
+            
+        else : 
+            screen.blit(botao_proxima_fase,(287,460))
+            botaorect = botao_proxima_fase.get_rect()
+            botaorect.x  = 287
+            botaorect.y = 460    
+            
+            
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                sys.exit()
+            
+
+            if event.type==pygame.MOUSEBUTTONDOWN:             
+                pos = pygame.mouse.get_pos()
+               
+                try:
+                    if botaorect.collidepoint(pos[0],pos[1]):
+                        import teste
+                        teste.Jogar()   
+                except:
+                    continue      
+         
+        pygame.display.flip()
+        
+ 
+            
+        
+        
